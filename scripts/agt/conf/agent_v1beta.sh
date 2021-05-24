@@ -115,7 +115,7 @@ sed -i "s|{EC_HCA}|$hca|g" ~/.ec/agt/conf/${mod}.yml
 
 
 cat ~/.ec/agt/conf/${mod}.yml
-agent -cfg .ec/agt/conf/${mod}.yml &
+nohup agent -cfg .ec/agt/conf/${mod}.yml & 
 
 timer=0
 while true
