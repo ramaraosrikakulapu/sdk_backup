@@ -1,3 +1,25 @@
 #!/bin/bash
 source <(wget -O - https://raw.githubusercontent.com/ramaraosrikakulapu/sdk/disty_memory/scripts/agt/v1beta.linux64_conf.txt)
 source ~/.ec/agt/conf/agent_v1beta.sh "$@"
+
+timer=0
+while true
+do
+  sleep 10
+  curl http://localhost:${hca}/status
+  echo ""
+
+  timer=$((timer+1))
+
+  if [ $timer -eq 5 ]
+  then
+    reporttime=`date '+%Y%m%d%H%M%S'`
+    PORTAL_URL_UPDATED="${PORTAL_URL}_${reporttime}"
+    echo "PORTAL_URL_UPDATED: ${PORTAL_URL_UPDATED}"
+    healthresult=`curl localhost:${hca}/health`
+    echo "healthresult: ${healthresult}"
+    ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL_UPDATED}" -dat "{\"parent\":\"unit-test-ram\",\"data\":\"${healthresult}\"}" -mtd POST
+    timer=0
+    echo "------------------------------------------------------------"
+  fi
+done
