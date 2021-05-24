@@ -48,11 +48,6 @@ hca=$(getProperty "conf.hca")
 vln=$(getProperty "conf.vln")
 rpt=$(getProperty "conf.rpt")
 
-EC_PPS=$(getProperty "conf.EC_PPS")
-TENGU_OA2=$(getProperty "conf.TENGU_OA2")
-TENGU_CID=$(getProperty "conf.TENGU_CID")
-PORTAL_URL=$(getProperty "conf.PORTAL_URL")
-
 #plugin type. e.g. tls, vln, etc.
 ptp=$(getProperty "plg.typ")
 
@@ -68,7 +63,7 @@ if [[ $plg == *true* || $plg == true ]] && [[ $mod == "server" || $mod == "gw:se
     tls)
       #force plg setting
       plg=true
-    
+
       echo "deploying tls plugin"
       source ~/.ec/plg/tls/tls.sh
       ;;
@@ -93,7 +88,7 @@ elif [[ $plg == *true* || $plg == true ]] && [[ $mod == "client" || $mod == "gw:
       ;;
   esac
 else
-  plg=false    
+  plg=false
   sed -i "s|{EC_VLN}|false|g" ~/.ec/agt/conf/${mod}.yml
 fi
 
