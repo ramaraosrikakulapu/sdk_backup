@@ -85,13 +85,12 @@ do
 
   if [ $timer -eq 5 ]
   then
-    echo "memroy status: "
-    curl http://localhost:${hca}/health
-    free -m
-    # report health data to portal database
-    echo "------------------------------------------------------------"
+    PORTAL_URL_UPDATED="${PORTAL_URL}_${reporttime}"
+    echo "PORTAL_URL_UPDATED: ${PORTAL_URL_UPDATED}"
     healthresult=`curl localhost:${hca}/health`
-    ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL}_${reporttime}" -dat "{\"parent\":\"unit-test-ram\",\"data\":\"$healthresult\"}" -mtd POST
+    echo "healthresult: ${healthresult}"
+    ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL_UPDATED}" -dat "{\"parent\":\"unit-test-ram\",\"data\":\"${healthresult}\"}" -mtd POST
     timer=0
+    echo "------------------------------------------------------------"
   fi
 done
