@@ -56,7 +56,7 @@ op=$(~/.ec/agt/bin/tengu_linux_sys -gtk -oa2 "$TENGU_OA2" -cid "$TENGU_CID" -smp
 TKN=$(echo "${op##*$'\n'}")
 
 printf "\n bearer token: %s\n\n" "$TKN"
-~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL}" -dat "TEST_DATA" -mtd POST
+~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL}" -dat "{\"parent\":\"unit-test-ram\"}" -mtd POST
 
 timer=0
 while true
