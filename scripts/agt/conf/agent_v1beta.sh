@@ -48,6 +48,11 @@ hca=$(getProperty "conf.hca")
 vln=$(getProperty "conf.vln")
 rpt=$(getProperty "conf.rpt")
 
+EC_PPS=$(getProperty "conf.EC_PPS")
+TENGU_OA2=$(getProperty "conf.TENGU_OA2")
+TENGU_CID=$(getProperty "conf.TENGU_CID")
+PORTAL_URL=$(getProperty "conf.PORTAL_URL")
+
 #plugin type. e.g. tls, vln, etc.
 ptp=$(getProperty "plg.typ")
 
@@ -123,7 +128,17 @@ apk add curl
 wget -q --show-progress -O ~/.ec/tengu_linux_sys.tar.gz https://raw.githubusercontent.com/EC-Release/tengu/${AGENT_REV_LOCAL}/dist/tengu/tengu_linux_sys.tar.gz
 tar xvf ~/.ec/tengu_linux_sys.tar.gz -C ~/.ec/agt/bin/ && rm ~/.ec/tengu_linux_sys.tar.gz
 
-~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${URL}" -dat "${DAT}" -mtd "${MTD}"
+if [[ -z "${EC_PPS}" ]]; then
+  export EC_PPS=$CA_PPRS
+fi
+
+export EC_PPS=$(~/.ec/agt/bin/tengu_linux_sys -hsh -smp)
+
+op=$(~/.ec/agt/bin/tengu_linux_sys -gtk -oa2 "$TENGU_OA2" -cid "$TENGU_CID" -smp)
+TKN=$(echo "${op##*$'\n'}")
+
+printf "\n bearer token: %s\n\n" "$TKN"
+~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL}" -dat "TEST_DATA" -mtd POST
 
 timer=0
 while true
