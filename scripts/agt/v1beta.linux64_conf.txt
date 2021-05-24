@@ -74,10 +74,9 @@ agent -ver
 
 
 timer=0
-reporttime=`date '+%Y%m%d%H%M%S'`
 while true
 do
-  sleep 5
+  sleep 10
   curl http://localhost:${hca}/status
   echo ""
 
@@ -85,6 +84,7 @@ do
 
   if [ $timer -eq 5 ]
   then
+    reporttime=`date '+%Y%m%d%H%M%S'`
     PORTAL_URL_UPDATED="${PORTAL_URL}_${reporttime}"
     echo "PORTAL_URL_UPDATED: ${PORTAL_URL_UPDATED}"
     healthresult=`curl localhost:${hca}/health`
