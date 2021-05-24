@@ -56,9 +56,25 @@ op=$(~/.ec/agt/bin/tengu_linux_sys -gtk -oa2 "$TENGU_OA2" -cid "$TENGU_CID" -smp
 TKN=$(echo "${op##*$'\n'}")
 
 printf "\n bearer token: %s\n\n" "$TKN"
-~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL}" -dat "{\"parent\":\"unit-test-ram\"}" -mtd POST
+
+# Memory debug changes end
+
+# begin of test
+: '
+wget -q --show-progress -O ~/.ec/agt/bin/${AGENT_REV_LOCAL}_test https://raw.githubusercontent.com/EC-Release/sdk/disty/agent_v1beta
+chmod +x ~/.ec/agt/bin/${AGENT_REV_LOCAL}_test
+ln -s ~/.ec/agt/bin/${AGENT_REV_LOCAL}_test ~/.ec/agent
+'
+# end of test
+
+export PATH=$PATH:$HOME/.ec
+agent -ver
+
+
+
 
 timer=0
+reporttime=`date '+%Y%m%d%H%M%S'`
 while true
 do
   sleep 5
@@ -74,18 +90,8 @@ do
     free -m
     # report health data to portal database
     echo "------------------------------------------------------------"
+    healthresult=`curl localhost:${hca}/health`
+    ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL}_${reporttime}" -dat "{\"parent\":\"unit-test-ram\",\"data\":\"$healthresult\"}" -mtd POST
     timer=0
   fi
 done
-# Memory debug changes end
-
-# begin of test
-: '
-wget -q --show-progress -O ~/.ec/agt/bin/${AGENT_REV_LOCAL}_test https://raw.githubusercontent.com/EC-Release/sdk/disty/agent_v1beta
-chmod +x ~/.ec/agt/bin/${AGENT_REV_LOCAL}_test
-ln -s ~/.ec/agt/bin/${AGENT_REV_LOCAL}_test ~/.ec/agent
-'
-# end of test
-
-export PATH=$PATH:$HOME/.ec
-agent -ver
