@@ -22,6 +22,7 @@ if [[ $# -ne 0 ]]; then
     echo "inside if.."
     nohup agent "$@" &
 
+    hca=$(getProperty "conf.hca")
     timer=0
     while true
     do
@@ -72,8 +73,6 @@ plg=$(getProperty "conf.plg")
 hca=$(getProperty "conf.hca")
 vln=$(getProperty "conf.vln")
 rpt=$(getProperty "conf.rpt")
-
-export hca=$hca
 
 #plugin type. e.g. tls, vln, etc.
 ptp=$(getProperty "plg.typ")
