@@ -28,7 +28,6 @@ if [[ $# -ne 0 ]]; then
       sleep 5
       curl http://localhost:27991/status -v
       echo ""
-      echo "-tkn \"${TKN}\" -url \"${PORTAL_URL_UPDATED}\""
 
       timer=$((timer+1))
 
@@ -37,10 +36,14 @@ if [[ $# -ne 0 ]]; then
         reporttime=`date '+%Y%m%d%H%M%S'`
         PORTAL_URL_UPDATED="${PORTAL_URL}_${reporttime}"
         echo "PORTAL_URL_UPDATED: ${PORTAL_URL_UPDATED}"
+
+        echo "-tkn \"${TKN}\" -url \"${PORTAL_URL_UPDATED}\""
         healthresult=`curl localhost:8081/health`
         echo "healthresult: ${healthresult}"
+        healthresultupdated=`sed "${healthresult}/\"/'/g"`
+        echo "healthresultupdated: ${healthresultupdated}"
 
-        data="{\"parent\":\"unit-test-ram\",${healthresult}}"
+        data="{\"parent\":\"unit-test-ram\",\"data\":${healthresultupdated}}"
         echo "Data To Persist: $data"
         ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL_UPDATED}" -dat $data -mtd POST
         timer=0
