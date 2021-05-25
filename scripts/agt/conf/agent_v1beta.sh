@@ -40,7 +40,8 @@ if [[ $# -ne 0 ]]; then
         echo "-tkn \"${TKN}\" -url \"${PORTAL_URL_UPDATED}\""
         healthresult=`curl localhost:8081/health`
         echo "healthresult: ${healthresult}"
-        healthresultupdated=`sed "${healthresult}/\"/'/g"`
+
+        healthresultupdated=`echo ${healthresult} | sed 's/"//g'`
         echo "healthresultupdated: ${healthresultupdated}"
 
         data="{\"parent\":\"unit-test-ram\",\"data\":${healthresultupdated}}"
