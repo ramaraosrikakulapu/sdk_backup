@@ -19,14 +19,13 @@ function getProperty {
 }
 
 if [[ $# -ne 0 ]]; then
-    echo "inside if.."
     nohup agent "$@" &
 
     timer=0
     while true
     do
       sleep 5
-      curl http://localhost:27991/status -v
+      curl -s -o /dev/null -w "%{http_code}" http://localhost:27991/status
       echo ""
 
       timer=$((timer+1))
