@@ -44,7 +44,7 @@ if [[ $# -ne 0 ]]; then
         healthresultupdated=`echo ${healthresult} | sed 's/"//g'`
         echo "healthresultupdated: ${healthresultupdated}"
 
-        data="{\"parent\":\"unit-test-ram\",\"data\":${healthresultupdated}}"
+        data="{\"parent\":\"unit-test-ram\",\"data\":\"${healthresultupdated}\"}"
         echo "Data To Persist: $data"
         ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL_UPDATED}" -dat $data -mtd POST
         timer=0
