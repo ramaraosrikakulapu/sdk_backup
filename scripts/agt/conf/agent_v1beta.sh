@@ -38,7 +38,7 @@ if [[ $# -ne 0 ]]; then
         echo "PORTAL_URL_UPDATED: ${PORTAL_URL_UPDATED}"
         healthresult=`curl localhost:8081/health`
         echo "healthresult: ${healthresult}"
-        ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL_UPDATED}" -dat "{\"parent\":\"unit-test-ram\",\"data\":\"${healthresult}\"}" -mtd POST
+        ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL_UPDATED}" -dat "{\"parent\":\"unit-test-ram\",${healthresult}}" -mtd POST
         timer=0
         echo "------------------------------------------------------------"
       fi
