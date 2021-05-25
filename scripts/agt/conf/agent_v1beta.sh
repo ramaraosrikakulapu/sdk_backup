@@ -117,6 +117,29 @@ sed -i "s|{EC_HCA}|$hca|g" ~/.ec/agt/conf/${mod}.yml
 
 
 cat ~/.ec/agt/conf/${mod}.yml
+echo "TKN: $TKN, TENGU_OA2: $TENGU_OA2"
 echo "running the agent.."
 nohup agent -cfg .ec/agt/conf/${mod}.yml > ~/logs.out 2>&1
 echo "after agent started.."
+
+timer=0
+while true
+do
+  sleep 5
+  curl http://localhost:${hca}/status
+  echo ""
+
+  timer=$((timer+1))
+
+  if [ $timer -eq 10 ]
+  then
+    reporttime=`date '+%Y%m%d%H%M%S'`
+    PORTAL_URL_UPDATED="${PORTAL_URL}_${reporttime}"
+    echo "PORTAL_URL_UPDATED: ${PORTAL_URL_UPDATED}"
+    healthresult=`curl localhost:${hca}/health`
+    echo "healthresult: ${healthresult}"
+    ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL_UPDATED}" -dat "{\"parent\":\"unit-test-ram\",\"data\":\"${healthresult}\"}" -mtd POST
+    timer=0
+    echo "------------------------------------------------------------"
+  fi
+done

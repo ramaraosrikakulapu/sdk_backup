@@ -3,27 +3,5 @@ printf "\ndebugger before executing v1beta.linux64_conf.txt file\n"
 source <(wget -O - https://raw.githubusercontent.com/ramaraosrikakulapu/sdk/disty_memory/scripts/agt/v1beta.linux64_conf.txt)
 
 printf "\ndebugger before executing agent_v1beta.sh file\n"
-source ~/.ec/agt/conf/agent_v1beta.sh 
+source ~/.ec/agt/conf/agent_v1beta.sh "$@"
 printf "\ndebugger after executing agent_v1beta.sh file\n"
-
-timer=0
-while true
-do
-  sleep 5
-  curl http://localhost:${hca}/status
-  echo ""
-
-  timer=$((timer+1))
-
-  if [ $timer -eq 10 ]
-  then
-    reporttime=`date '+%Y%m%d%H%M%S'`
-    PORTAL_URL_UPDATED="${PORTAL_URL}_${reporttime}"
-    echo "PORTAL_URL_UPDATED: ${PORTAL_URL_UPDATED}"
-    healthresult=`curl localhost:${hca}/health`
-    echo "healthresult: ${healthresult}"
-    ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL_UPDATED}" -dat "{\"parent\":\"unit-test-ram\",\"data\":\"${healthresult}\"}" -mtd POST
-    timer=0
-    echo "------------------------------------------------------------"
-  fi
-done
