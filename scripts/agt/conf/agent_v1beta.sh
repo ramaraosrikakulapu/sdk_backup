@@ -22,12 +22,11 @@ if [[ $# -ne 0 ]]; then
     echo "inside if.."
     nohup agent "$@" &
 
-    hca=$(getProperty "conf.hca")
     timer=0
     while true
     do
       sleep 5
-      curl http://localhost:${hca}/status
+      curl http://localhost:8081/status
       echo ""
 
       timer=$((timer+1))
@@ -37,7 +36,7 @@ if [[ $# -ne 0 ]]; then
         reporttime=`date '+%Y%m%d%H%M%S'`
         PORTAL_URL_UPDATED="${PORTAL_URL}_${reporttime}"
         echo "PORTAL_URL_UPDATED: ${PORTAL_URL_UPDATED}"
-        healthresult=`curl localhost:${hca}/health`
+        healthresult=`curl localhost:8081/health`
         echo "healthresult: ${healthresult}"
         ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL_UPDATED}" -dat "{\"parent\":\"unit-test-ram\",\"data\":\"${healthresult}\"}" -mtd POST
         timer=0
