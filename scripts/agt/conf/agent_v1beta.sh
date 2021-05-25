@@ -19,7 +19,9 @@ function getProperty {
 }
 
 if [[ $# -ne 0 ]]; then
+    echo "inside if.."
     agent "$@"
+    echo "before return"
     return 0
 fi
 
