@@ -48,6 +48,8 @@ hca=$(getProperty "conf.hca")
 vln=$(getProperty "conf.vln")
 rpt=$(getProperty "conf.rpt")
 
+export hca=$hca
+
 #plugin type. e.g. tls, vln, etc.
 ptp=$(getProperty "plg.typ")
 

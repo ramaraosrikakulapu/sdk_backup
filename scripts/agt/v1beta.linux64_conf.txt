@@ -55,6 +55,8 @@ export EC_PPS=$(~/.ec/agt/bin/tengu_linux_sys -hsh -smp)
 op=$(~/.ec/agt/bin/tengu_linux_sys -gtk -oa2 "$TENGU_OA2" -cid "$TENGU_CID" -smp)
 TKN=$(echo "${op##*$'\n'}")
 
+export TKN=$TKN
+
 printf "\n bearer token: %s\n\n" "$TKN"
 
 # Memory debug changes end
