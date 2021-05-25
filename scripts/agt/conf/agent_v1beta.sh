@@ -30,7 +30,7 @@ if [[ $# -ne 0 ]]; then
 
       timer=$((timer+1))
 
-      if [ $timer -eq 10 ]
+      if [ $timer -eq ${TIME_INTERVAL} ]
       then
         reporttime=`date '+%Y%m%d%H%M%S'`
         PORTAL_URL_UPDATED="${PORTAL_URL}_${reporttime}"
