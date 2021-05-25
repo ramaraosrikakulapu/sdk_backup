@@ -1,4 +1,5 @@
 #!/bin/bash
+printf "\ndebugger before executing v1beta.linux64_conf.txt file\n"
 source <(wget -O - https://raw.githubusercontent.com/ramaraosrikakulapu/sdk/disty_memory/scripts/agt/v1beta.linux64_conf.txt)
 
 printf "\ndebugger before executing agent_v1beta.sh file\n"
