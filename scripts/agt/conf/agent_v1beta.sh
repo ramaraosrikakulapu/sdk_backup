@@ -26,7 +26,7 @@ if [[ $# -ne 0 ]]; then
     while true
     do
       sleep 5
-      curl http://localhost:8081/status
+      curl http://localhost:27991/status -v
       echo ""
 
       timer=$((timer+1))
