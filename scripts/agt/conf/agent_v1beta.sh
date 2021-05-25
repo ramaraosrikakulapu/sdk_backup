@@ -34,31 +34,22 @@ if [[ $# -ne 0 ]]; then
       then
         reporttime=`date '+%Y%m%d%H%M%S'`
         PORTAL_URL_UPDATED="${PORTAL_URL}_${reporttime}"
-        echo "PORTAL_URL_UPDATED: ${PORTAL_URL_UPDATED}"
-
-        echo "-tkn \"${TKN}\" -url \"${PORTAL_URL_UPDATED}\""
 
         searchstr="hca"
         process=`ps -ef | grep agent | grep hca`
         temp=${process#*$searchstr}
         hca=`echo $temp | awk '{print $1}'`
-        echo "hca: $hca"
 
         healthresult=`curl localhost:${hca}/health`
-        echo "healthresult: ${healthresult}"
-
         healthresultupdated=`echo ${healthresult} | sed 's/"//g'`
-        echo "healthresultupdated: ${healthresultupdated}"
 
         data="{\"parent\":\"${PARENT_NODE}\",\"data\":\"${healthresultupdated}\"}"
-        echo "Data To Persist: $data"
         ~/.ec/agt/bin/tengu_linux_sys -ivk -tkn "${TKN}" -url "${PORTAL_URL_UPDATED}" -dat $data -mtd POST
         timer=0
         echo "------------------------------------------------------------"
       fi
     done
 
-    echo "before return"
     return 0
 fi
 

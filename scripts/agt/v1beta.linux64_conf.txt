@@ -38,7 +38,6 @@ chmod +x ~/.ec/agt/bin/${AGENT_REV_LOCAL}
 ls -la ~/.ec/agt/bin
 ln -s ~/.ec/agt/bin/${AGENT_REV_LOCAL} ~/.ec/agent
 
-# Memory debug changes start
 apk add curl
 
 # download the v1.2beta agent
@@ -56,10 +55,7 @@ op=$(~/.ec/agt/bin/tengu_linux_sys -gtk -oa2 "$TENGU_OA2" -cid "$TENGU_CID" -smp
 TKN=$(echo "${op##*$'\n'}")
 
 export TKN=$TKN
-
 printf "\n bearer token: %s\n\n" "$TKN"
-
-# Memory debug changes end
 
 # begin of test
 : '
