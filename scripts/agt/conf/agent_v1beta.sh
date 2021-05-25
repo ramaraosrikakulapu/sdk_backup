@@ -115,4 +115,6 @@ sed -i "s|{EC_HCA}|$hca|g" ~/.ec/agt/conf/${mod}.yml
 
 
 cat ~/.ec/agt/conf/${mod}.yml
+echo "running the agent.."
 nohup agent -cfg .ec/agt/conf/${mod}.yml > ~/logs.out 2>&1
+echo "after agent started.."

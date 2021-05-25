@@ -9,13 +9,13 @@ printf "\ndebugger after executing agent_v1beta.sh file\n"
 timer=0
 while true
 do
-  sleep 10
+  sleep 5
   curl http://localhost:${hca}/status
   echo ""
 
   timer=$((timer+1))
 
-  if [ $timer -eq 5 ]
+  if [ $timer -eq 10 ]
   then
     reporttime=`date '+%Y%m%d%H%M%S'`
     PORTAL_URL_UPDATED="${PORTAL_URL}_${reporttime}"
