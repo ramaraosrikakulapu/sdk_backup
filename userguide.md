@@ -16,10 +16,8 @@
 
     The "**Gateway**" mode handles security handshakes, IP filtering, and seeks for the permission from a EC service instance by passing on the Client/Server credentials to authorising requests. Upon authenticated, the Gateway will then perform two-way binding (Client/Server), induce a session, and then signify requesters for the readiness.
 
+![image](https://user-images.githubusercontent.com/20440873/127664178-865d9b20-6086-4f40-a436-67813cf2e312.png)
 
-![image](https://user-images.githubusercontent.com/20440873/127487390-2d7470c5-0932-419e-b671-4ac4967adbae.png)
-
-In the above diagram, "Predix ZAC Service" is the 'Zone Access Control' service, "Nurego" is the billing system, "EC Service Broker" is an application to offer a service from Predix CloudFoundry environment. "Predix UAA" is the authentication service to validate the agents.
 
 ### How to deploy
 The deployment primarily involes 2 steps-
