@@ -10,18 +10,6 @@
 #
 #  autor: puja.sharma@ge.com
 
-# Temp code and have to be deleted
-function hasEnvVar () {
-    cf e $1 > ~tmp
-
-    ref1=$(cat ~tmp | grep -e "$2" | awk '$2!="" {print $1}')
-
-    #ref1=$(echo "$2" | awk -v ref="$1" '($1==ref":" && $2!="") {print}')
-    if [[ ! -z $ref1 ]]; then
-      printf "1"
-    fi
-}
-
 # find and output the original app belong to the given app $1
 # $1: <app name>
 function findInstOfOrigin () {
