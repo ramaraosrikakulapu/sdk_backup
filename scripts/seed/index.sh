@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Test: $STACK"
+
 cf login -a {{CF-API}} -u {{CF-USER}} -p {{CF-PWD}} -o {{CF-ORG}} -s {{CF-SPACE}}
 
 cf push {{APP-NAME}} --docker-image enterpriseconnect/api:v1.2beta --no-start
