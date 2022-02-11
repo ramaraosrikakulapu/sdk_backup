@@ -27,7 +27,7 @@ curl -s -o $(pwd)/docker-creds.yml https://${GITHUB_TOKEN}@raw.githubusercontent
 echo "checking env"
 echo ${VCAP_APPLICATION}
 if [[ ! -z "${VCAP_APPLICATION}" ]]; then
-    wget -O run.sh https://raw.githubusercontent.com/EC-Release/sdk/disty/scripts/service1.x/run_v1.sh
+    wget -O run.sh https://raw.githubusercontent.com/ramaraosrikakulapu/sdk/disty_1x_migration/scripts/service1.x/run_v1.sh
     chmod 755 run.sh
     ./run.sh
 else
