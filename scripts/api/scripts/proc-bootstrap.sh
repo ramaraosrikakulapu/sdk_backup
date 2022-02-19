@@ -58,8 +58,9 @@ if [[ $# -gt 1 ]]; then
   TIME=$(date)
   printf "\n\n local time: %s\n\n" "$TIME"
   
-  source <(wget -O - $EXEC_URL)
-  
+  wget -q --show-progress -O ~/.ec/scripts/custom.sh $EXEC_URL
+  chmod +x ~/.ec/scripts/custom.sh
+
   #functional interface to be implemented
   # function name: int_a
   #
@@ -70,6 +71,6 @@ if [[ $# -gt 1 ]]; then
   # i.e. printf "%s" "{\"decision\":\"PERMIT\"}";return 0;
   # i.e. printf "%s" "{\"error\":\"error from aws token verification.\"}";return -1;
   int_a "$EXEC_DAT" "$EXEC_MAP"
- 
+  rm ~/.ec/scripts/custom.sh
   exit 0
 fi
