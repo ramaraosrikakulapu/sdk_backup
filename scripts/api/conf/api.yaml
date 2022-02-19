@@ -1,0 +1,28 @@
+ec-config:
+  conf:
+    mod: api
+    app: $EC_API_APP_NAME
+    apt: $EC_PORT
+    dbg: true
+    tls: false
+    oa2: $EC_API_OA2
+    #oar optionally indicates the OAUTH instance which is solely used for authentication-to-re-direction purpose
+    #both oa2 and oar should refer to the same process but defer in URL. The oar is particularily useful in a 
+    #restricted environment such as k8s.
+    #deprecated
+    #oar: $EC_API_OA2_REDIRECT
+    cid: $EC_API_DEV_ID
+    sed: $EC_SEED_NODE
+    #local url accessisble to other seeds
+    hst: $EC_SEED_HOST
+    agt: $EC_AGT_MODE
+    cps: 5
+  # group to permit the access of connectivity
+  subGroup:
+  - name: $EC_AGT_GRP
+    ids: ["$EC_API_DEV_ID"]
+      
+  #available in oauth2, api, x:gateway, and watcher for TLS purpose. ceredential can be used in both cred, and authGroup segments  
+  #cred:
+  #  privateKey: $EC_PVTKEY
+  #  publicCrt: $EC_PUBCRT
